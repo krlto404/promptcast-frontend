@@ -439,7 +439,7 @@ export const App: React.FC = () => {
             <div className="space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
               <div className="text-center space-y-4">
                 <h1 className="text-4xl sm:text-6xl md:text-8xl font-black tracking-tighter leading-none uppercase">{t.ui.title}</h1>
-                <p className="text-[#86cf31] text-sm uppercase tracking-[0.5em] font-black opacity-80">{t.ui.subtitle}</p>
+                <p className="text-[#86cf31] text-xs uppercase tracking-[0.5em] font-black opacity-80">{t.ui.subtitle}</p>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
