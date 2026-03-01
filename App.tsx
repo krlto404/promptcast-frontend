@@ -207,7 +207,7 @@ export const App: React.FC = () => {
 
   const getTTSAudio = async (text: string, voice: VoiceName): Promise<string | null> => {
     try {
-      const res = await fetch(`${BACKEND_URL}/api/tts`, { method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify({text, voice}) });
+      const res = await fetch(`${BACKEND_URL}/api/tts`, { method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify({text, voice: voice.charAt(0).toUpperCase() + voice.slice(1)}) });
       if (!res.ok) throw new Error((await res.json()).error || "TTS error");
       const data = await res.json();
       setIsQuotaExhausted(false);
