@@ -133,6 +133,11 @@ export const App: React.FC = () => {
   const [isQuotaExhausted, setIsQuotaExhausted] = useState(false);
   
   const sampleCache = useRef<Record<string, AudioBuffer>>({});
+  const voiceStorageCache = useRef<Record<string, string>>({});
+  useEffect(() => {
+    const keys = Object.keys(localStorage).filter(k => k.startsWith('voice_'));
+    keys.forEach(k => { try { voiceStorageCache.current[k.replace('voice_', '')] = localStorage.getItem(k) || ''; } catch(e) {} });
+  }, []);
 
   const [speakers, setSpeakers] = useState<SpeakerConfig[]>([
     { id: '1', name: 'Sophie', voice: 'zephyr' },
@@ -276,6 +281,7 @@ export const App: React.FC = () => {
       if (audio) {
         const buffer = await decodeAudioData(decodeBase64(audio), ctx, 24000, 1);
         sampleCache.current[cacheKey] = buffer;
+        try { localStorage.setItem('voice_' + cacheKey, audio); } catch(e) {}
         const source = ctx.createBufferSource();
         source.buffer = buffer;
         source.connect(ctx.destination);
