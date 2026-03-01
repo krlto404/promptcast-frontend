@@ -82,7 +82,9 @@ async function fetchWithRetry(url: string, options: RequestInit, maxRetries = 3)
     try {
       const res = await fetch(url, options);
       if (res.status === 429) { await new Promise(r => setTimeout(r, Math.pow(2,i)*2000+3000)); lastError = new Error("429"); continue; }
+      if (!res.ok) { const d = await res.json().catch(()=>({})); throw new Error(d.error || String(res.status)); }
       return await res.json();
+    } catch(err: any) { lastError = err; if (!err.message?.includes("429")) throw err; }
   }
   throw lastError;
 }
